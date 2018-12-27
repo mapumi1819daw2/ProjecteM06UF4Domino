@@ -1,8 +1,8 @@
-function encaminar(manegador, pathame, jugadorDeTorn, fitxes, fitxa, response){
+function encaminar(manegador, pathame, jugador, response){
     console.log("Encaminador de la petició: "+pathame);
 
     if(typeof manegador[pathame] === 'function'){
-        return manegador[pathame](response, jugadorDeTorn,fitxes, fitxa);
+        return manegador[pathame](response, jugador);
     }
     else{
         console.log("Encaminador no trobat: "+pathame);

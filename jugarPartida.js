@@ -17,14 +17,25 @@ var fitxes = new Array("1.1","1.2","1.3","1.4","1.5","1.6");
 
 
 
-var  Jugador = {
+var  JugadorA = {
 
     nom : "Marc",
-    fitxes: new Array(),
+    fitxes: new Array("1.1","1.2","1.3","1.4","1.5","1.6"),
     fitxa: 0,
     posicioFitxa : 0
 
 };
+
+var  JugadorB = {
+
+    nom : "Jordi",
+    fitxes: new Array("2.1","2.2","2.3","2.4","2.5","2.6"),
+    fitxa: 1,
+    posicioFitxa : 0
+
+};
+
+var jugadors = new Array(JugadorA, JugadorB);
 
 
 
@@ -33,29 +44,38 @@ var tauler = new Array();
 var tiradaInicial = true;
 
 
-function iniciar(encaminador, manegadors, Jugador){
+function iniciar(encaminador, manegadors){
     function jugant(request, response){
         //Url on ens volem dirigir
         var pathname = url.parse(request.url).pathname;
 
         console.log("Petició per a "+pathname+ " rebuda.");
 
-        var consulta = url.parse(request.url).query;
+        var consulta = url.parse(request.url, true).query;
 
-        console.log("Paràmetre rebut: "+consulta);
+        
 
         var fitxa;
 
         for(var clau in consulta){
-            fitxa = consulta[clau];
+        
+           console.log("Clau: "+ clau);
+            console.log("For: "+ consulta[clau]);
         }
+
+
+        /**S'assignen els valors del PATH a la classe Jugador */
+        jugadors[0].fitxa = consulta["fitxa"];
+
+        jugadors[0].fitxes[jugadors[0].fitxa] = null;
+
+        console.log("Fitxa: "+ jugadors[0].fitxa);
+
 
         fitxes[fitxa] = null;
         
 
-        console.log("Valor rebut: "+fitxa);
-
-        encaminador.encaminar(manegadors, pathname, Jugador, fitxes, fitxa, response);
+        encaminador.encaminar(manegadors, pathname, jugadors[0], response);
     }
 
     http.createServer(jugant).listen(8888);
@@ -64,7 +84,7 @@ function iniciar(encaminador, manegadors, Jugador){
 }
 
 /* var fitxesJugador = new Array("1.1"); */
-iniciar(encaminador, manegadors, Jugador);
+iniciar(encaminador, manegadors, jugadors);
 
 console.log("Servidor iniciat");
 /***
