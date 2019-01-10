@@ -6,6 +6,8 @@ var peticions = require("./Peticions");
 var manegadors = {};
 manegadors["/tirarFitxa"] = peticions.tirarFitxa;
 manegadors["/consultes"] = peticions.consultaTauler;
+manegadors["/login"] = peticions.login;
+manegadors["/"] = peticions.home;
 
 
 var http = require("http");
