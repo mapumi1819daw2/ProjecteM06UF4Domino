@@ -83,7 +83,7 @@ function iniciar(encaminador, manegadors){
         fitxes[fitxa] = null;
         
 
-        encaminador.encaminar(manegadors, pathname, jugadors[0], response);
+        encaminador.encaminador(manegadors, pathname,response, jugadors[0]);
     }
 
     http.createServer(jugant).listen(8888);

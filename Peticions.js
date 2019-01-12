@@ -1,4 +1,11 @@
 var file = require("fs");
+var MongoClient = requrie("mongodb").MongoClient;
+var assert = require("assert");
+var Objectid = require("mongodb").ObjectID;
+
+var ruta = 'mongodb://localhost:270/domino';
+
+
 
 
 /* Mostra la pàgina inicial del Joc de domino desde on
@@ -16,6 +23,28 @@ function home(response, jugador) {
 
 function login(response, jugador) {
     var login = "[login]";
+
+
+
+    MongoClient.connect(ruta, function (err, db){
+        assert.equal(err, null);
+        console.log("Conexió correcta");
+        var resposta = db.collection('jugadors').find({"nom":jugador.nom});
+        resposta.each(function (err, doc){
+            assert(err, null);
+            if(doc!=null){
+
+                /* Nom trobat */
+                response.writeHead(200, { "Content-Type": "text/html" });
+                response.write("<p>Benvingut al domino: ")
+            }
+            else{
+                /* No trobat */
+            }
+        });
+
+    });
+
     console.log(login);
     response.writeHead(200, { "Content-Type": "text/plain" });
     response.write("be");
