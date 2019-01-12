@@ -2,12 +2,16 @@ var encaminador = require("./encaminador");
 var peticions = require("./Peticions");
 
 /* var jugador = require("./jugador"); */
-
+/**
+ * 1- Login
+ * 2- iniciPartida
+ */
 var manegadors = {};
 manegadors["/tirarFitxa"] = peticions.tirarFitxa;
 manegadors["/consultes"] = peticions.consultaTauler;
 manegadors["/login"] = peticions.login;
-manegadors["/"] = peticions.home;
+manegadors["/iniciPartida"] = peticions.iniciPartida;
+/* manegadors["/home"] = peticions.home; */
 
 
 var http = require("http");
