@@ -12,7 +12,7 @@ var ruta = 'mongodb://localhost:27017/domino';
 
 /* Mostra la pàgina inicial del Joc de domino desde on
 es pot iniciar sessió */
-function login(response, jugador) {
+function login(response, data) {
     var login = "[login] ";
     console.log(login);
 
@@ -25,7 +25,7 @@ function login(response, jugador) {
 }
 
 /* Retornem el el script */
-function scriptjs(response, jugador){
+function scriptjs(response, data){
 
     file.readFile('js/script.js', function (err, data) {
         response.writeHead(200, { "Content-Type": "text/html" });
@@ -36,7 +36,7 @@ function scriptjs(response, jugador){
 
 
 /* Retornem el full d'estils */
-function stylecss(response, jugador){
+function stylecss(response, data){
 
     file.readFile('css/style.css', function (err, data) {
         response.writeHead(200, { "Content-Type": "text/css" });
@@ -46,7 +46,7 @@ function stylecss(response, jugador){
 }
 
 
-function home(response, jugador) {
+function home(response, data) {
     var home = "[home] ";
 
 
@@ -62,11 +62,11 @@ function home(response, jugador) {
 }
 
 
-function iniciPartida(response, jugador){
+function iniciPartida(response, data){
      var iniciPartida = "[Inici Partida] ";
      console.log(iniciPartida);
 
-     console.log(iniciPartida+" "+ jugador.nom);
+     console.log(iniciPartida+" "+ data["nom"]);
 
 
      /* Estat 0 = Correcte
@@ -79,7 +79,7 @@ function iniciPartida(response, jugador){
      MongoClient.connect(ruta, function (err, db){
         assert.equal(err, null);
         console.log("Conexió correcta");
-        var resposta = db.collection('usuaris').find({"nom":jugador.nom});
+        var resposta = db.collection('usuaris').find({"nom":data["nom"]});
 
         response.writeHead(200, { "Content-Type": "application/json" });
         
@@ -90,7 +90,7 @@ function iniciPartida(response, jugador){
 
                 console.log(iniciPartida+" entra doc");
                 valor.estat =0;
-                valor.nom = jugador.nom;
+                valor.nom = data["nom"];
 
                 /* Nom trobat */
                 
@@ -98,12 +98,11 @@ function iniciPartida(response, jugador){
                 
             }
             else{
-                /* callback(); */
-                /* No trobat */
-                /* console.log(iniciPartida+" no entra doc");
-                resposta.estat = 1;
-               
-                response.write(JSON.stringify(resposta)); */
+                console.log(iniciPartida+ "no s'ha trobat cap coincidència");
+                valor.estat =1;
+                valor.nom = data["nom"];
+                response.write(JSON.stringify(valor));
+                
                 response.end();
 
             }
@@ -120,7 +119,7 @@ function iniciPartida(response, jugador){
     
 }
 
-function tirarFitxa(response, jugador) {
+function tirarFitxa(response, data) {
 
     response.writeHead(200, { "Content-Type": "text/html" });
     response.write("<p>Fitxa rebuda: " + jugador.fitxa + "</p><BR><BR>");
@@ -137,7 +136,7 @@ function tirarFitxa(response, jugador) {
 
 }
 
-function consultaTauler(response, jugador) {
+function consultaTauler(response, data) {
 
     response.writeHead(200, { "Content-Type": "text/plain" });
     response.write("Entra consulta tauler");

@@ -11,12 +11,35 @@ function cridaAJAXLogin(url) {
     }
     xhr.onreadystatechange = callbackLogin;
     xhr.open('POST', url, true);
-    xhr.send('');
+    xhr.send(null);
 }
 
-function dadesRespostaLogin(){
+
+function pantallaJoc() {
+
+}
+
+function dadesRespostaLogin(dada) {
     var login = "[Funcio dadesRespostaLogin]: ";
-    console.log(login+ dada.estat);
+
+
+    switch (dada.estat) {
+        /* 0 OK */
+        case 0:
+            pantallaJoc(dada.nom);
+            break;
+
+        /* ERROR */
+        case 1:
+            var para = document.createElement("P");
+            var t = document.createTextNode("L'usuari/a " + dada.nom + " no consta a la base de dades.");
+            para.appendChild(t);
+            document.body.appendChild(para);
+            break;
+
+
+    }
+    console.log(login + dada.estat);
 }
 
 
@@ -26,9 +49,9 @@ function dadesRespostaLogin(){
 function callbackLogin() {
     if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
-            
+
             dada = JSON.parse(xhr.response);
-            dadesRespostaLogin();
+            dadesRespostaLogin(dada);
         } else {
             console.log('problemes amb l\'AJAX');
         }
@@ -41,24 +64,24 @@ function callbackLogin() {
 
 
 /* OnClick login */
-function login(){
+function login() {
 
     var login = "[Funcio login]: ";
-    
-   
+
+
     var nom = document.getElementById("nom").value;
 
 
-    console.log(login+ "Nom introduit: "+ nom);
+    console.log(login + "Nom introduit: " + nom);
 
-    var url = "http://localhost:8888/iniciPartida?nom="+nom;
+    var url = "http://localhost:8888/iniciPartida?nom=" + nom;
 
     cridaAJAXLogin(url);
 
 
 }
 
-   
+
 
 
 

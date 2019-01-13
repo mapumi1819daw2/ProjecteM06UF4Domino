@@ -68,12 +68,14 @@ function iniciar(encaminador, manegadors){
         
 
         var fitxa;
+        var data = Array();
         /**
          * Paràmetres:
          * fitxa = valor dins array
          * pos (0 o 1) esquerra o dreta en el tauler
          */
         for(var clau in consulta){
+            data[clau] = consulta[clau];
         
            console.log("Clau: "+ clau);
             console.log("For: "+ consulta[clau]);
@@ -81,19 +83,21 @@ function iniciar(encaminador, manegadors){
 
 
         /**S'assignen els valors del PATH a la classe Jugador */
-        jugadors[0].fitxa = consulta["fitxa"];
+        /* jugadors[0].fitxa = consulta["fitxa"];
         
         jugadors[0].fitxes[jugadors[0].fitxa] = null;
         jugadors[0].posicioFitxa = consulta["costat"];
 
         console.log("Fitxa: "+ jugadors[0].fitxa);
-        console.log("Costat: "+ jugadors[0].posicioFitxa);
+        console.log("Costat: "+ jugadors[0].posicioFitxa); */
 
         //?
         fitxes[fitxa] = null;
+
+        
         
 
-        encaminador.encaminador(manegadors, pathname,response, jugadors[0]);
+        encaminador.encaminador(manegadors, pathname,response, data);
     }
 
     http.createServer(jugant).listen(8888);
