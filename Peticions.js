@@ -1,10 +1,10 @@
 var file = require("fs");
-/* var MongoClient = require("mongodb").MongoClient; */
+var MongoClient = require("mongodb").MongoClient;
 var assert = require("assert");
 /* var Objectid = require("mongodb").ObjectID; */
 
 
-var ruta = 'mongodb://localhost:270/domino';
+var ruta = 'mongodb://192.168.56.1:270/domino';
 
 
 
@@ -29,24 +29,7 @@ function home(response, jugador) {
 
 
 
-    /* MongoClient.connect(ruta, function (err, db){
-        assert.equal(err, null);
-        console.log("Conexió correcta");
-        var resposta = db.collection('jugadors').find({"nom":jugador.nom});
-        resposta.each(function (err, doc){
-            assert(err, null);
-            if(doc!=null){*/
-
-                /* Nom trobat */
-                /* response.writeHead(200, { "Content-Type": "text/html" });
-                response.write("<p>Benvingut al domino: "); */
-            /* }
-            else{ */
-                /* No trobat */
-            /*}
-        });
-
-    }); */
+    
 
     
 
@@ -61,12 +44,31 @@ function iniciPartida(response, jugador){
      var iniciPartida = "[Inici Partida] ";
      console.log(iniciPartida);
 
-     file.readFile('taulerDeJoc.html', function (err, data) {
+     MongoClient.connect(ruta, function (err, db){
+        assert.equal(err, null);
+        console.log("Conexió correcta");
+        var resposta = db.collection('usuaris').find({"nom":jugador.nom});
+        resposta.each(function (err, doc){
+            assert(err, null);
+            if(doc!=null){
+
+                /* Nom trobat */
+                response.writeHead(200, { "Content-Type": "text/plain" });
+                response.write("<p>Benvingut al domino: "+jugador.nom);
+            }
+            else{
+                /* No trobat */
+            }
+        });
+
+    });
+
+     /* file.readFile('taulerDeJoc.html', function (err, data) {
         response.writeHead(200, { "Content-Type": "text/html" });
         response.write(data);
         response.end();
     });
-
+ */
     
 }
 
