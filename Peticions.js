@@ -1,10 +1,11 @@
 var file = require("fs");
-var MongoClient = require("mongodb").MongoClient;
+/* Poso ruta completa perquè en el fixe de casa no agafa la ruta al estar en un disc diferent */
+var MongoClient = require("C:\\Users\\Marc\\node_modules\\mongodb").MongoClient;
 var assert = require("assert");
 /* var Objectid = require("mongodb").ObjectID; */
 
 
-var ruta = 'mongodb://192.168.56.1:270/domino';
+var ruta = 'mongodb://192.168.1.16:27017/domino';
 
 
 
@@ -21,6 +22,27 @@ function login(response, jugador) {
         response.end();
     });
 
+}
+
+/* Retornem el el script */
+function scriptjs(response, jugador){
+
+    file.readFile('js/script.js', function (err, data) {
+        response.writeHead(200, { "Content-Type": "text/html" });
+        response.write(data);
+        response.end();
+    });
+}
+
+
+/* Retornem el full d'estils */
+function stylecss(response, jugador){
+
+    file.readFile('css/style.css', function (err, data) {
+        response.writeHead(200, { "Content-Type": "text/css" });
+        response.write(data);
+        response.end();
+    });
 }
 
 
@@ -44,7 +66,17 @@ function iniciPartida(response, jugador){
      var iniciPartida = "[Inici Partida] ";
      console.log(iniciPartida);
 
-     MongoClient.connect(ruta, function (err, db){
+     console.log(iniciPartida+" "+ jugador.nom);
+
+
+     /* Estat 0 = Correcte
+        Estat 1 = Error */
+     var resposta = {
+         estat : 0,
+         nom : "",
+     };
+
+     MongoClient.connect(ruta, { useNewUrlParser: true }, function (err, db){
         assert.equal(err, null);
         console.log("Conexió correcta");
         var resposta = db.collection('usuaris').find({"nom":jugador.nom});
@@ -52,12 +84,20 @@ function iniciPartida(response, jugador){
             assert(err, null);
             if(doc!=null){
 
+                resposta.estat =0;
+                resposta.nom = jugador.nom;
+
                 /* Nom trobat */
-                response.writeHead(200, { "Content-Type": "text/plain" });
-                response.write("<p>Benvingut al domino: "+jugador.nom);
+                response.writeHead(200, { "Content-Type": "application/json" });
+                response.write(JSON.stringify(resposta));
             }
             else{
                 /* No trobat */
+                resposta.estat = 1;
+                response.writeHead(200, { "Content-Type": "application/json" });
+                response.write(JSON.stringify(resposta));
+                
+
             }
         });
 
@@ -100,6 +140,8 @@ function consultaTauler(response, jugador) {
 
 exports.home = home;
 exports.login = login;
+exports.scriptjs = scriptjs;
+exports.stylecss = stylecss;
 exports.iniciPartida = iniciPartida;
 exports.tirarFitxa = tirarFitxa;
 exports.consultaTauler = consultaTauler;

@@ -7,6 +7,12 @@ var peticions = require("./Peticions");
  * 2- iniciPartida
  */
 var manegadors = {};
+
+/* Script i full d'estil */
+manegadors["/js/script.js"] = peticions.scriptjs;
+manegadors["/css/css/style.css"] = peticions.stylecss;
+
+
 manegadors["/tirarFitxa"] = peticions.tirarFitxa;
 manegadors["/consultes"] = peticions.consultaTauler;
 manegadors["/login"] = peticions.login;
