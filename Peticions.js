@@ -5,7 +5,7 @@ var assert = require("assert");
 /* var Objectid = require("mongodb").ObjectID; */
 
 
-var ruta = 'mongodb://192.168.1.16:27017/domino';
+var ruta = 'mongodb://localhost:27017/domino';
 
 
 
@@ -71,32 +71,40 @@ function iniciPartida(response, jugador){
 
      /* Estat 0 = Correcte
         Estat 1 = Error */
-     var resposta = {
+     var valor = {
          estat : 0,
          nom : "",
      };
 
-     MongoClient.connect(ruta, { useNewUrlParser: true }, function (err, db){
+     MongoClient.connect(ruta, function (err, db){
         assert.equal(err, null);
         console.log("Conexió correcta");
         var resposta = db.collection('usuaris').find({"nom":jugador.nom});
+
+        response.writeHead(200, { "Content-Type": "application/json" });
+        
         resposta.each(function (err, doc){
-            assert(err, null);
+           
+            assert.equal(err, null);
             if(doc!=null){
 
-                resposta.estat =0;
-                resposta.nom = jugador.nom;
+                console.log(iniciPartida+" entra doc");
+                valor.estat =0;
+                valor.nom = jugador.nom;
 
                 /* Nom trobat */
-                response.writeHead(200, { "Content-Type": "application/json" });
-                response.write(JSON.stringify(resposta));
+                
+                response.write(JSON.stringify(valor));
+                
             }
             else{
+                /* callback(); */
                 /* No trobat */
+                /* console.log(iniciPartida+" no entra doc");
                 resposta.estat = 1;
-                response.writeHead(200, { "Content-Type": "application/json" });
-                response.write(JSON.stringify(resposta));
-                
+               
+                response.write(JSON.stringify(resposta)); */
+                response.end();
 
             }
         });

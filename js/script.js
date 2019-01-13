@@ -10,10 +10,15 @@ function cridaAJAXLogin(url) {
         return false;
     }
     xhr.onreadystatechange = callbackLogin;
-    console.log()
-    xhr.open('POST', url, false);
-    xhr.send(null);
+    xhr.open('POST', url, true);
+    xhr.send('');
 }
+
+function dadesRespostaLogin(){
+    var login = "[Funcio dadesRespostaLogin]: ";
+    console.log(login+ dada.estat);
+}
+
 
 /**
 * Callback AJAX del Login
@@ -30,10 +35,7 @@ function callbackLogin() {
     }
 }
 
-function dadesRespostaLogin(){
-    var login = "[Funcio dadesRespostaLogin]: ";
-    console.log(login+ dada.estat);
-}
+
 
 
 
