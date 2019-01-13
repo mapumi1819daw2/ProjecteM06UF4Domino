@@ -8,6 +8,31 @@ var assert = require("assert");
 var ruta = 'mongodb://localhost:27017/domino';
 
 
+var partida = {
+
+    id : 1,
+    jugadors : [
+        {
+            estat: 0,
+            nom: "Marc",
+            fitxes : new Array("1:1","1:2","1:3","1:4","1:5","1:6","1:7"),
+            posicio: 0,
+            punts: 0,
+
+        },
+
+        {
+            estat : 0,
+            nom: "Aaron",
+            fitxes : new Array("2:1","2:2","2:3","2:4","2:5","2:6","2:7"),
+            posicio: 1,
+            punts: 0,
+
+        }
+    ]
+};
+
+
 
 
 /* Mostra la pàgina inicial del Joc de domino desde on
@@ -25,7 +50,7 @@ function login(response, data) {
 }
 
 /* Retornem el el script */
-function scriptjs(response, data){
+function scriptjs(response, data) {
 
     file.readFile('js/script.js', function (err, data) {
         response.writeHead(200, { "Content-Type": "text/html" });
@@ -36,7 +61,7 @@ function scriptjs(response, data){
 
 
 /* Retornem el full d'estils */
-function stylecss(response, data){
+function stylecss(response, data) {
 
     file.readFile('css/style.css', function (err, data) {
         response.writeHead(200, { "Content-Type": "text/css" });
@@ -51,9 +76,9 @@ function home(response, data) {
 
 
 
-    
 
-    
+
+
 
     /* console.log(home);
     response.writeHead(200, { "Content-Type": "text/plain" });
@@ -62,47 +87,55 @@ function home(response, data) {
 }
 
 
-function iniciPartida(response, data){
-     var iniciPartida = "[Inici Partida] ";
-     console.log(iniciPartida);
+function iniciPartida(response, data) {
+    var iniciPartida = "[Inici Partida] ";
+    console.log(iniciPartida);
 
-     console.log(iniciPartida+" "+ data["nom"]);
+    console.log(iniciPartida + " " + data["nom"]);
+    console.log(iniciPartida + " " + partida.jugadors[0].nom);
 
 
-     /* Estat 0 = Correcte
-        Estat 1 = Error */
-     var valor = {
-         estat : 0,
-         nom : "",
-     };
 
-     MongoClient.connect(ruta, function (err, db){
+
+    /* Estat 0 = Correcte
+       Estat 1 = Error */
+    /* var valor = {
+        estat: 0,
+        nom: "",
+    }; */
+
+    MongoClient.connect(ruta, function (err, db) {
         assert.equal(err, null);
         console.log("Conexió correcta");
-        var resposta = db.collection('usuaris').find({"nom":data["nom"]});
+        var resposta = db.collection('usuaris').find({ "nom": data["nom"] });
 
         response.writeHead(200, { "Content-Type": "application/json" });
-        
-        resposta.each(function (err, doc){
-           
-            assert.equal(err, null);
-            if(doc!=null){
 
-                console.log(iniciPartida+" entra doc");
-                valor.estat =0;
-                valor.nom = data["nom"];
+        resposta.each(function (err, doc) {
+
+            assert.equal(err, null);
+            if (doc != null) {
+
+                console.log(iniciPartida + " entra doc");
+                /* valor.estat = 0;
+                valor.nom = data["nom"]; */
+
+
+
 
                 /* Nom trobat */
-                
-                response.write(JSON.stringify(valor));
-                
+
+                response.write(JSON.stringify(partida.jugadors[0]));
+
             }
-            else{
-                console.log(iniciPartida+ "no s'ha trobat cap coincidència");
-                valor.estat =1;
-                valor.nom = data["nom"];
-                response.write(JSON.stringify(valor));
-                
+            else {
+                console.log(iniciPartida + "no s'ha trobat cap coincidència");
+
+                partida.jugadors[0].estat = 1;
+                partida.jugadors[0].nom = data["nom"];
+
+                response.write(JSON.stringify(partida.jugadors[0]));
+
                 response.end();
 
             }
@@ -110,13 +143,13 @@ function iniciPartida(response, data){
 
     });
 
-     /* file.readFile('taulerDeJoc.html', function (err, data) {
-        response.writeHead(200, { "Content-Type": "text/html" });
-        response.write(data);
-        response.end();
-    });
- */
-    
+    /* file.readFile('taulerDeJoc.html', function (err, data) {
+       response.writeHead(200, { "Content-Type": "text/html" });
+       response.write(data);
+       response.end();
+   });
+*/
+
 }
 
 function tirarFitxa(response, data) {

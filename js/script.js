@@ -15,7 +15,12 @@ function cridaAJAXLogin(url) {
 }
 
 
-function pantallaJoc() {
+function pantallaJoc(dada) {
+
+
+    var pantallaJoc = "[pantallaJoc] ";
+    console.log(pantallaJoc+ dada.nom);
+
 
 }
 
@@ -51,6 +56,7 @@ function callbackLogin() {
         if (xhr.status === 200) {
 
             dada = JSON.parse(xhr.response);
+            alert(dada.nom);
             dadesRespostaLogin(dada);
         } else {
             console.log('problemes amb l\'AJAX');
