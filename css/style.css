@@ -17,4 +17,5 @@ a{
     margin-left: 20px;
     padding: 3%;
     background-color: green;
+    cursor: pointer;
 }
