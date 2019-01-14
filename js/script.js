@@ -23,6 +23,30 @@ function pantallaJoc(dada) {
     console.log(pantallaJoc+ dada.nom);
 
 
+    /* DIV TAULER */
+    var divTauler = document.createElement("div");
+    divTauler.setAttribute("id", "divTauler");
+    document.body.appendChild(divTauler);
+
+    /* DIV FITXES */
+    var divFitxes = document.createElement("div");
+    divFitxes.setAttribute("id", "divFitxes");
+    document.body.appendChild(divFitxes);
+
+    for(var i=0; i< dada.fitxes.length; i++){
+            console.log("Fitxa "+ dada.fitxes[i]);
+            
+            var para = document.createElement("a");
+
+            /* Posició dins l'array */
+            para.setAttribute("id",i);
+            para.setAttribute("onClick","clicaFitxa("+i+")");
+            var t = document.createTextNode("Fitxa "+ dada.fitxes[i]);
+            para.appendChild(t);
+
+            divFitxes.appendChild(para);
+    }
+
 }
 
 function dadesRespostaLogin(dada) {

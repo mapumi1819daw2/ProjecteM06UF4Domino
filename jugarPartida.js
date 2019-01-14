@@ -10,7 +10,8 @@ var manegadors = {};
 
 /* Script i full d'estil */
 manegadors["/js/script.js"] = peticions.scriptjs;
-manegadors["/css/css/style.css"] = peticions.stylecss;
+manegadors["/js/joc.js"] = peticions.jocjs;
+manegadors["/css/style.css"] = peticions.stylecss;
 
 
 manegadors["/tirarFitxa"] = peticions.tirarFitxa;

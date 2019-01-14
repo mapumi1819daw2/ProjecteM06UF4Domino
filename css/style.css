@@ -1,3 +1,20 @@
-p{
-    width: 10%;
+div{
+    position: relative;
+    
+}
+
+
+#divTauler, #divFitxes{
+    
+    top: 100px;
+    height: 40%;
+}
+
+
+
+a{
+    position: relative;
+    margin-left: 20px;
+    padding: 3%;
+    background-color: green;
 }

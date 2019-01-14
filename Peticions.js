@@ -49,10 +49,21 @@ function login(response, data) {
 
 }
 
-/* Retornem el el script */
+/* Retornem el script */
 function scriptjs(response, data) {
 
     file.readFile('js/script.js', function (err, data) {
+        response.writeHead(200, { "Content-Type": "text/html" });
+        response.write(data);
+        response.end();
+    });
+}
+
+
+/* Retornem el script del joc */
+function jocjs(response, data) {
+
+    file.readFile('js/joc.js', function (err, data) {
         response.writeHead(200, { "Content-Type": "text/html" });
         response.write(data);
         response.end();
@@ -185,6 +196,7 @@ function consultaTauler(response, data) {
 exports.home = home;
 exports.login = login;
 exports.scriptjs = scriptjs;
+exports.jocjs = jocjs;
 exports.stylecss = stylecss;
 exports.iniciPartida = iniciPartida;
 exports.tirarFitxa = tirarFitxa;

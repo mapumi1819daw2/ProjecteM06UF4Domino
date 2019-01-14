@@ -1,0 +1,8 @@
+
+
+/* dada */
+
+
+function clicaFitxa(i){
+    
+}
