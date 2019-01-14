@@ -10,23 +10,23 @@ var ruta = 'mongodb://localhost:27017/domino';
 
 var partida = {
 
-    id : 1,
-    jugadors : [
+    "id" : 1,
+    "jugadors" : [
         {
-            estat: 0,
-            nom: "Marc",
-            fitxes : new Array("1:1","1:2","1:3","1:4","1:5","1:6","1:7"),
-            posicio: 0,
-            punts: 0,
+            "estat": 0,
+            "nom": "Marc",
+            "fitxes" : new Array("1:1","1:2","1:3","1:4","1:5","1:6","1:7"),
+            "posicio": 0,
+            "punts": 0,
 
         },
 
         {
-            estat : 0,
-            nom: "Aaron",
-            fitxes : new Array("2:1","2:2","2:3","2:4","2:5","2:6","2:7"),
-            posicio: 1,
-            punts: 0,
+            "estat" : 0,
+            "nom": "Aaron",
+            "fitxes" : new Array("2:1","2:2","2:3","2:4","2:5","2:6","2:7"),
+            "posicio": 1,
+            "punts": 0,
 
         }
     ]
@@ -99,10 +99,13 @@ function iniciPartida(response, data) {
 
     /* Estat 0 = Correcte
        Estat 1 = Error */
-    /* var valor = {
+    var valor = {
         estat: 0,
         nom: "",
-    }; */
+    };
+
+
+    var trobat = false;
 
     MongoClient.connect(ruta, function (err, db) {
         assert.equal(err, null);
@@ -113,28 +116,29 @@ function iniciPartida(response, data) {
 
         resposta.each(function (err, doc) {
 
-            assert.equal(err, null);
+            assert.strictEqual(err, null);
             if (doc != null) {
 
                 console.log(iniciPartida + " entra doc");
-                /* valor.estat = 0;
-                valor.nom = data["nom"]; */
+                
+                partida.jugadors[0].estat = 1;
 
+                trobat = true;
 
-
-
+                
+                
                 /* Nom trobat */
-
+                console.log(iniciPartida+ partida.jugadors[0].nom);
                 response.write(JSON.stringify(partida.jugadors[0]));
 
             }
             else {
                 console.log(iniciPartida + "no s'ha trobat cap coincidència");
 
-                partida.jugadors[0].estat = 1;
-                partida.jugadors[0].nom = data["nom"];
 
+                if(!trobat)
                 response.write(JSON.stringify(partida.jugadors[0]));
+
 
                 response.end();
 

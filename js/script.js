@@ -1,3 +1,4 @@
+
 /**
  * Crida AJAX per fer el login
  * Passem url amb el nom
@@ -30,12 +31,12 @@ function dadesRespostaLogin(dada) {
 
     switch (dada.estat) {
         /* 0 OK */
-        case 0:
-            pantallaJoc(dada.nom);
+        case 1:
+            pantallaJoc(dada);
             break;
 
         /* ERROR */
-        case 1:
+        case 0:
             var para = document.createElement("P");
             var t = document.createTextNode("L'usuari/a " + dada.nom + " no consta a la base de dades.");
             para.appendChild(t);
@@ -56,7 +57,8 @@ function callbackLogin() {
         if (xhr.status === 200) {
 
             dada = JSON.parse(xhr.response);
-            alert(dada.nom);
+            
+           
             dadesRespostaLogin(dada);
         } else {
             console.log('problemes amb l\'AJAX');
