@@ -18,6 +18,12 @@ function cridaAJAXLogin(url) {
 
 function pantallaJoc(dada) {
 
+    /* Amaguem apartat Login */
+
+    document.getElementById("usuari").innerText = "Partida iniciada, "+dada.nom;
+    document.getElementById("pPunts").removeAttribute("hidden");
+    document.getElementById("divLogin").setAttribute("hidden", "true");
+
 
     var pantallaJoc = "[pantallaJoc] ";
     console.log(pantallaJoc+ dada.nom);
@@ -27,6 +33,8 @@ function pantallaJoc(dada) {
     var divTauler = document.createElement("div");
     divTauler.setAttribute("id", "divTauler");
     document.body.appendChild(divTauler);
+
+
 
     /* DIV FITXES */
     var divFitxes = document.createElement("div");
@@ -41,6 +49,7 @@ function pantallaJoc(dada) {
             /* Posició dins l'array */
             para.setAttribute("id",i);
             para.setAttribute("onClick","clicaFitxa("+i+")");
+            para.setAttribute("class","fitxa");
             var t = document.createTextNode("Fitxa "+ dada.fitxes[i]);
             para.appendChild(t);
 
