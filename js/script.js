@@ -15,6 +15,16 @@ function cridaAJAXLogin(url) {
     xhr.send(null);
 }
 
+function logOut(){
+
+    document.getElementById("usuari").setAttribute("hidden", "true");
+    document.getElementById("estat").setAttribute("hidden", "true");
+    document.getElementById("pPunts").setAttribute("hidden", "true");
+    document.getElementById("divTauler").setAttribute("hidden", "true");
+    document.getElementById("divFitxes").setAttribute("hidden", "true");
+    document.getElementById("divLogin").removeAttribute("hidden");
+    
+}
 
 function pantallaJoc(dada) {
 
@@ -23,6 +33,20 @@ function pantallaJoc(dada) {
     document.getElementById("usuari").innerText = "Partida iniciada, "+dada.nom;
     document.getElementById("pPunts").removeAttribute("hidden");
     document.getElementById("divLogin").setAttribute("hidden", "true");
+
+
+    /* Creem el logout */
+    var divPare = document.getElementById("usuari");
+    var nou = document.createElement("button");
+    nou.setAttribute("id", "out");
+    nou.setAttribute("onClick", "logOut()");
+    var t = document.createTextNode("Log Out");
+    
+    nou.appendChild(t);
+    
+    divPare.appendChild(nou);
+
+    
 
 
     var pantallaJoc = "[pantallaJoc] ";

@@ -3,6 +3,11 @@ div{
     
 }
 
+button{
+    position: relative;
+    left: 20px;
+}
+
 
 #divTauler, #divFitxes{
     

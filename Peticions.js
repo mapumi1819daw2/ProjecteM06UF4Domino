@@ -168,7 +168,7 @@ function iniciPartida(response, data) {
 
     var trobat = false;
 
-    MongoClient.connect(ruta, function (err, db) {
+   /*  MongoClient.connect(ruta, function (err, db) {
         assert.equal(err, null);
         console.log("Conexió correcta");
         var resposta = db.collection('usuaris').find({ "nom": data["nom"] });
@@ -189,7 +189,7 @@ function iniciPartida(response, data) {
                 
                 
                 /* Nom trobat */
-                console.log(iniciPartida+ partida.jugadors[0].nom);
+                /*console.log(iniciPartida+ partida.jugadors[0].nom);
                 response.write(JSON.stringify(partida.jugadors[0]));
 
             }
@@ -206,14 +206,22 @@ function iniciPartida(response, data) {
             }
         });
 
-    });
+    }); */
 
-    /* file.readFile('taulerDeJoc.html', function (err, data) {
-       response.writeHead(200, { "Content-Type": "text/html" });
-       response.write(data);
-       response.end();
-   });
-*/
+    console.log(iniciPartida + " entra doc");
+                
+    partida.jugadors[0].estat = 1;
+
+    trobat = true;
+
+    
+    
+    /* Nom trobat */
+    console.log(iniciPartida+ partida.jugadors[0].nom);
+    response.write(JSON.stringify(partida.jugadors[0]));
+    response.end();
+
+   
 
 }
 
